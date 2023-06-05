@@ -10,9 +10,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class DetailActivity extends AppCompatActivity {
 
     private TextView searchResultTextView;
+    private List<String> Budaejjigae, JaeyukDeopbap, Rjjigae, Gimbap, CurryRice, Tteokbokki;
 
 
     @Override
@@ -38,27 +42,28 @@ public class DetailActivity extends AppCompatActivity {
 
         // 검색어를 TextView에 설정
         searchResultTextView.setText(searchQuery);
-
         // 뒤로 가기 버튼을 활성화
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         LinearLayout buttonContainer = findViewById(R.id.buttonContainer); // 버튼이 추가될 컨테이너
 
         // 버튼 생성 및 속성 설정
-        for (int i = 0; i < 5; i++) {
-            Button button = new Button(this);
-            button.setText("Button " + i);
-            button.setTag(i); // 버튼에 고유한 값을 설정하기 위해 태그를 사용할 수도 있습니다.
+        Rjjigae = Arrays.asList("고추장","애호박","쇠고기","대파","마늘","양파","감자");
+
+        for (String ingredient : Rjjigae) {
+            Button button = new Button(this); // 버튼 생성
+            button.setText(ingredient); // 버튼 텍스트 설정
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int buttonValue = (int) v.getTag(); // 클릭된 버튼의 값 가져오기
-                    // 클릭된 버튼에 대한 동작 수행
-                    // 예: 다른 액티비티로 이동하거나 값을 처리하는 등의 동작
+                    // 버튼 클릭 이벤트 처리
+
+                    // 예시: 해당 재료에 대한 동작 수행
                 }
             });
             buttonContainer.addView(button); // 버튼을 컨테이너에 추가
         }
+
     }
 
 }

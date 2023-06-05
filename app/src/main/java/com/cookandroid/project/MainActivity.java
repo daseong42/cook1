@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private ListView listView;
 
     private List<String> itemList;
+    private List<String> Budaejjigae, JaeyukDeopbap, Rjjigae, Gimbap, CurryRice, Tteokbokki;
     private List<String> filteredList;
     private ArrayAdapter<String> adapter;
 
@@ -32,6 +33,14 @@ public class MainActivity extends AppCompatActivity {
 
         // 아이템 리스트 초기화
         itemList = Arrays.asList("부대찌개", "제육덮밥", "고추장찌개", "김밥", "카레라이스", "떡볶이");
+
+        Budaejjigae= Arrays.asList("김치","비엔나","스팸","두부","떡","대파","홍고추","청양고추","사골곰탕");
+        JaeyukDeopbap = Arrays.asList("밥","돼지고기","양파","당근","표고","대파","청양고추","홍고추");
+        Rjjigae = Arrays.asList("고추장","애호박","쇠고기","대파","마늘","양파","감자");
+        Gimbap = Arrays.asList("김", "밥", "햄", "단무지", "오이", "당근", "계란", "맛살");
+        CurryRice = Arrays.asList();
+        Tteokbokki = Arrays.asList();
+
 
         // 검색 결과를 담을 필터링된 리스트 초기화
         filteredList = new ArrayList<>();
