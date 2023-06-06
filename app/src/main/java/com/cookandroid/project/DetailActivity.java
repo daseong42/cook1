@@ -65,16 +65,19 @@ public class DetailActivity extends AppCompatActivity {
         // 해당 음식에 따른 식재료 목록을 가져오는 로직
         switch (food) {
             case "부대찌개":
-                ingredients = Arrays.asList("김치", "비엔나", "스팸", "두부", "떡", "대파", "홍고추", "청양고추", "사골곰탕");
+                ingredients = Arrays.asList("김치 1줌", "비엔나 100g", "스팸 1개", "두부 1/2모", "사골곰탕 1봉지");
                 break;
             case "제육덮밥":
-                ingredients = Arrays.asList("밥", "돼지고기", "양파", "당근", "표고", "대파", "청양고추", "홍고추");
+                ingredients = Arrays.asList("밥 2공기", "돼지고기앞다리살 1근", "양파 1개", "당근 1/3개", "대파", "마늘 1스푼");
                 break;
             case "고추장찌개":
-                ingredients = Arrays.asList("고추장", "애호박", "쇠고기", "대파", "마늘", "양파", "감자");
+                ingredients = Arrays.asList("돼지고기 300g", "애호박 1/2개", "감자 2개", "양파 1개");
                 break;
-            case "김밥":
-                ingredients = Arrays.asList("김", "밥", "햄", "단무지", "오이", "당근", "계란", "맛살");
+            case "카레":
+                ingredients = Arrays.asList("돼지고기 150g", "감자 2개", "양파 2개", "당근 1/2개");
+                break;
+            case "떡볶이":
+                ingredients = Arrays.asList("떡 2컵", "물 2컵", "대파1/2대");
                 break;
             // 다른 음식에 대한 식재료 목록 설정
         }
