@@ -73,6 +73,9 @@ public class DetailActivity extends AppCompatActivity {
             case "고추장찌개":
                 ingredients = Arrays.asList("고추장", "애호박", "쇠고기", "대파", "마늘", "양파", "감자");
                 break;
+            case "김밥":
+                ingredients = Arrays.asList("김", "밥", "햄", "단무지", "오이", "당근", "계란", "맛살");
+                break;
             // 다른 음식에 대한 식재료 목록 설정
         }
 

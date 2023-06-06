@@ -13,7 +13,7 @@
         android:padding="16dp">
 
         <TextView
-            android:id="@+id/searchResultTextView"
+            android:id="@+id/ResultTextView"
             android:layout_width="match_parent"
             android:layout_height="63dp"
             android:textColor="@android:color/black"
@@ -22,5 +22,16 @@
             android:gravity="center"/>
 
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ListView
+            android:id="@+id/ResultlistView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
 
 </LinearLayout>
