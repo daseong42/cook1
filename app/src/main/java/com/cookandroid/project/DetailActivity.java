@@ -1,11 +1,14 @@
 package com.cookandroid.project;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,6 +24,8 @@ public class DetailActivity extends AppCompatActivity {
     private List<String> ingredientsList;
     private List<String> selectedIngredients;
     private int[] buttonStates;
+    private List<String> itemList;
+    private ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +96,18 @@ public class DetailActivity extends AppCompatActivity {
             selectedIngredients.remove(ingredient);
         }
     }
+
+    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            String selectedItem = filteredList.get(position);
+            // 선택된 아이템 정보를 DetailActivity로 전달하고 액티비티를 시작
+            Intent intent = new Intent(MainActivity.this, DetailActivity
+                    .class);
+            intent.putExtra("selectedItem", selectedItem);
+            startActivity(intent);
+        }
+    });
 
     //뒤로가기
     @Override
