@@ -19,11 +19,9 @@
             </intent-filter>
         </activity>
 
-        <!--Detail.Activity파일도 동작할 수 있도록 추가-->
-        <activity android:name=".DetailActivity"
-            android:label="Detail Activity">
-            <!-- 필요한 경우 intent-filter 요소 추가 -->
-        </activity>
+        <activity android:name=".DetailActivity"/>
+        <activity android:name=".resultActivity"/>
+
     </application>
 
 </manifest>

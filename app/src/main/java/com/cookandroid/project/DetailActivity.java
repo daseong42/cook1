@@ -1,11 +1,9 @@
 package com.cookandroid.project;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -31,6 +29,16 @@ public class DetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+
+        //비교 버튼 -> resultActivity
+        Button detailbutton = (Button) findViewById(R.id.Detailbutton);
+        detailbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), resultActivity.class);
+                startActivity(intent);
+            }
+        });
 
         // 레이아웃 요소 참조
         searchResultTextView = findViewById(R.id.searchResultTextView);
@@ -61,6 +69,7 @@ public class DetailActivity extends AppCompatActivity {
             });
             buttonContainer.addView(button); // 버튼을 컨테이너에 추가
         }
+
     }
 
     // 음식에 따른 식재료 목록을 가져오는 메서드
@@ -97,17 +106,6 @@ public class DetailActivity extends AppCompatActivity {
         }
     }
 
-    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            String selectedItem = filteredList.get(position);
-            // 선택된 아이템 정보를 DetailActivity로 전달하고 액티비티를 시작
-            Intent intent = new Intent(MainActivity.this, DetailActivity
-                    .class);
-            intent.putExtra("selectedItem", selectedItem);
-            startActivity(intent);
-        }
-    });
 
     //뒤로가기
     @Override

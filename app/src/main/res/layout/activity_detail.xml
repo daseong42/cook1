@@ -30,5 +30,17 @@
         android:orientation="vertical">
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom">
+
+        <Button
+            android:id="@+id/Detailbutton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="비교"/>
+
+    </LinearLayout>
 
 </LinearLayout>
