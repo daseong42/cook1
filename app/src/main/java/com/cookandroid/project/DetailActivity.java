@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 public class DetailActivity extends AppCompatActivity {
@@ -24,6 +25,12 @@ public class DetailActivity extends AppCompatActivity {
     private int[] buttonStates;
     private List<String> itemList;
     private ListView listView;
+
+    //식재료 가격
+    HashMap<String, Double>ingredientsPrices = new HashMap<>() ;
+    //선택한 식재료
+    HashMap<String, Double>selectedingredients = new HashMap<>() ;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +77,7 @@ public class DetailActivity extends AppCompatActivity {
             buttonContainer.addView(button); // 버튼을 컨테이너에 추가
         }
 
+
     }
 
     // 음식에 따른 식재료 목록을 가져오는 메서드
@@ -95,9 +103,9 @@ public class DetailActivity extends AppCompatActivity {
                 break;
             // 다른 음식에 대한 식재료 목록 설정
         }
-
         return ingredients;
     }
+
 
     // 식재료 토글 기능 처리
     private void toggleIngredient(Button button, String ingredient) {
