@@ -27,7 +27,7 @@ public class DetailActivity extends AppCompatActivity {
     private ListView listView;
 
     //식재료 가격
-    HashMap<String, Double>ingredientsPrices = new HashMap<>() ;
+    HashMap<String, Double>ingredientPrices = new HashMap<>() ;
     //선택한 식재료
     HashMap<String, Double>selectedingredients = new HashMap<>() ;
 
@@ -37,15 +37,13 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        //비교 버튼 -> resultActivity
-        Button detailbutton = (Button) findViewById(R.id.Detailbutton);
-        detailbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), resultActivity.class);
-                startActivity(intent);
-            }
-        });
+        // 식재료 임시
+        ingredientPrices.put("ingredient1", 100.0);
+        ingredientPrices.put("ingredient2", 200.0);
+        ingredientPrices.put("ingredient3", 300.0);
+        ingredientPrices.put("ingredient4", 400.0);
+
+
 
         // 레이아웃 요소 참조
         searchResultTextView = findViewById(R.id.searchResultTextView);
@@ -64,7 +62,6 @@ public class DetailActivity extends AppCompatActivity {
 
         LinearLayout buttonContainer = findViewById(R.id.buttonContainer); // 버튼이 추가될 컨테이너
 
-
         for (String ingredient : ingredientsList) {
             Button button = new Button(this); // 버튼 생성
             button.setText(ingredient); // 버튼 텍스트 설정
@@ -77,7 +74,15 @@ public class DetailActivity extends AppCompatActivity {
             buttonContainer.addView(button); // 버튼을 컨테이너에 추가
         }
 
-
+        //비교 버튼 -> resultActivity
+        Button detailbutton = (Button) findViewById(R.id.Detailbutton);
+        detailbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), resultActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     // 음식에 따른 식재료 목록을 가져오는 메서드

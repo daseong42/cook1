@@ -7,32 +7,43 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="93dp"
+        android:layout_height="wrap_content"
         android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="16dp">
-
+        android:orientation="horizontal">
         <TextView
             android:id="@+id/ResultTextView"
             android:layout_width="match_parent"
-            android:layout_height="63dp"
+            android:layout_height="wrap_content"
             android:textColor="@android:color/black"
-            android:textSize="24sp"
-            tools:text="Result"
+            tools:text="식재료 종합값"
             android:gravity="center"/>
-
     </LinearLayout>
 
+    <!--비교 결과 위치-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <ListView
-            android:id="@+id/ResultListView"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/comparetext"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent"
+            tools:text="비교결과 위치"
+            android:gravity="center"/>
     </LinearLayout>
 
+    <!--처음화면으로 돌아가는 버튼-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom">
+        <Button
+            android:id="@+id/backbutton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="확인"/>
 
-
+    </LinearLayout>
 
 </LinearLayout>
