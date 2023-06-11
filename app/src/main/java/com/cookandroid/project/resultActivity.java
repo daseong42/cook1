@@ -1,38 +1,41 @@
 package com.cookandroid.project;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 
 public class resultActivity extends AppCompatActivity {
+
+    private TextView ResultTextView;
+    private TextView ResultText;
+    HashMap<String, Double>RestaurantPrices = new HashMap<>() ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
 
-        Intent intent = getIntent();
-        HashMap<String, Double> selectedIngredients = (HashMap<String, Double>) intent.getSerializableExtra("selectedIngredients");
+        //가게 가격
+        RestaurantPrices.put("국민포차", 17900.0);
+        RestaurantPrices.put("땅스부대찌개", 18500.0);
 
-        displaySelectedIngredients(selectedIngredients);
+        Intent intent = getIntent();
+        //선택한 식재료 출력
+        HashMap<String, Double> selectedIngredients = (HashMap<String, Double>) intent.getSerializableExtra("selectedIngredients");
+        double totalSelectedIngredientsCost = displaySelectedIngredients(selectedIngredients);
+
+        // 각 레스토랑 추천메뉴 세부 가격 출력
+        double totalRestaurantCost = displayRestaurantPrices();
+
+        // 가격 비교 및 추천
+        comparePricesAndRecommend(totalSelectedIngredientsCost, totalRestaurantCost);
 
         //처음으로 돌아가는 버튼
         Button nextButton = findViewById(R.id.backbutton);
@@ -43,13 +46,38 @@ public class resultActivity extends AppCompatActivity {
         });
     }
 
-    private void displaySelectedIngredients(HashMap<String, Double> selectedIngredients) {
+    //선택한 식재료 가격 합산 출력
+    private double displaySelectedIngredients(HashMap<String, Double> selectedIngredients) {
         TextView resultTextView = findViewById(R.id.ResultTextView);
-        String resultText = "";
+        double totalCost = 0;
         for (String ingredient : selectedIngredients.keySet()) {
-            resultText += ingredient + " (" + selectedIngredients.get(ingredient) + "원)\n";
+            totalCost += selectedIngredients.get(ingredient);
         }
-        resultTextView.setText(resultText);
+        resultTextView.setText("직접 요리: " + Math.round(totalCost) + "원");
+        return totalCost;
+    }
+
+    //가게 메뉴 가격 목록 출력
+    private double displayRestaurantPrices() {
+        TextView restaurantPricesTextView = findViewById(R.id.Restaurant);
+        String restaurantPricesText = "";
+        double totalRestaurantCost = 0;
+        for (String restaurant : RestaurantPrices.keySet()) {
+            restaurantPricesText += restaurant + " : " + Math.round(RestaurantPrices.get(restaurant)) + "원\n";
+            totalRestaurantCost += RestaurantPrices.get(restaurant);
+        }
+        restaurantPricesTextView.setText(restaurantPricesText);
+        return totalRestaurantCost;
+    }
+
+    //가격 비교
+    private void comparePricesAndRecommend(double selectedIngredientsTotal, double restaurantTotal) {
+        TextView compareText = findViewById(R.id.comparetext);
+        if (selectedIngredientsTotal > restaurantTotal) {
+            compareText.setText("배달 추천!");
+        } else {
+            compareText.setText("직접 요리 추천!");
+        }
     }
 
     //처음으로 돌아가는 버튼 기능

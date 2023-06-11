@@ -1,6 +1,7 @@
 package com.cookandroid.project;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -21,29 +23,23 @@ public class DetailActivity extends AppCompatActivity {
 
     private TextView searchResultTextView;
     private List<String> ingredientsList;
-    private List<String> selectedIngredients;
+    private HashMap<String, Double> selectedIngredients;
     private int[] buttonStates;
     private List<String> itemList;
     private ListView listView;
+    private String searchQuery;
 
     //식재료 가격
     HashMap<String, Double>ingredientPrices = new HashMap<>() ;
     //선택한 식재료
-    HashMap<String, Double>selectedingredients = new HashMap<>() ;
-
+    // 제거할 부분: HashMap<String, Double>selectedIngredients = new HashMap<>() ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        // 식재료 임시
-        ingredientPrices.put("ingredient1", 100.0);
-        ingredientPrices.put("ingredient2", 200.0);
-        ingredientPrices.put("ingredient3", 300.0);
-        ingredientPrices.put("ingredient4", 400.0);
-
-
+        selectedIngredients = new HashMap<>();
 
         // 레이아웃 요소 참조
         searchResultTextView = findViewById(R.id.searchResultTextView);
@@ -54,81 +50,52 @@ public class DetailActivity extends AppCompatActivity {
         // 검색어를 TextView에 설정
         searchResultTextView.setText(searchQuery);
 
-        // 음식에 따른 식재료 목록 설정
-        ingredientsList = getIngredientsList(searchQuery);
+        // 식재료 임시목록
+        ingredientPrices.put("스팸", 3000.0);
+        ingredientPrices.put("소시지", 1500.0);
+        ingredientPrices.put("대파", 500.0);
+        ingredientPrices.put("양파", 600.0);
+        ingredientPrices.put("신김치", 600.0);
+        ingredientPrices.put("베이크드 빈스", 300.0); //30g
+        ingredientPrices.put("체다슬라이스 치즈", 300.0);
 
-        // 선택된 식재료를 저장할 리스트 초기화
-        selectedIngredients = new ArrayList<>();
+        createButtons();
 
-        LinearLayout buttonContainer = findViewById(R.id.buttonContainer); // 버튼이 추가될 컨테이너
-
-        for (String ingredient : ingredientsList) {
-            Button button = new Button(this); // 버튼 생성
-            button.setText(ingredient); // 버튼 텍스트 설정
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    toggleIngredient(button, ingredient);
-                }
-            });
-            buttonContainer.addView(button); // 버튼을 컨테이너에 추가
-        }
-
-        //비교 버튼 -> resultActivity
-        Button detailbutton = (Button) findViewById(R.id.Detailbutton);
-        detailbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), resultActivity.class);
-                startActivity(intent);
+        Button nextButton = findViewById(R.id.Detailbutton);
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                goToResultActivity();
             }
         });
     }
 
-    // 음식에 따른 식재료 목록을 가져오는 메서드
-    private List<String> getIngredientsList(String food) {
-        List<String> ingredients = new ArrayList<>();
+    private void createButtons() {
+        LinearLayout buttonContainer = findViewById(R.id.buttonContainer);
+        for (String ingredient : ingredientPrices.keySet()) {
+            Button ingredientButton = new Button(this);
+            ingredientButton.setText(ingredient);
+            ingredientButton.setBackgroundColor(Color.GRAY);
 
-        // 해당 음식에 따른 식재료 목록을 가져오는 로직
-        switch (food) {
-            case "부대찌개":
-                ingredients = Arrays.asList("김치 1줌", "비엔나 100g", "스팸 1개", "두부 1/2모", "사골곰탕 1봉지");
-                break;
-            case "제육덮밥":
-                ingredients = Arrays.asList("밥 2공기", "돼지고기앞다리살 1근", "양파 1개", "당근 1/3개", "대파", "마늘 1스푼");
-                break;
-            case "고추장찌개":
-                ingredients = Arrays.asList("돼지고기 300g", "애호박 1/2개", "감자 2개", "양파 1개");
-                break;
-            case "카레":
-                ingredients = Arrays.asList("돼지고기 150g", "감자 2개", "양파 2개", "당근 1/2개");
-                break;
-            case "떡볶이":
-                ingredients = Arrays.asList("떡 2컵", "물 2컵", "대파1/2대");
-                break;
-            // 다른 음식에 대한 식재료 목록 설정
-        }
-        return ingredients;
-    }
+            ingredientButton.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    if (!selectedIngredients.containsKey(ingredient)) {
+                        selectedIngredients.put(ingredient, ingredientPrices.get(ingredient));
+                        ingredientButton.setBackgroundColor(Color.GREEN);
+                    } else {
+                        selectedIngredients.remove(ingredient);
+                        ingredientButton.setBackgroundColor(Color.GRAY);
+                    }
+                }
+            });
 
-
-    // 식재료 토글 기능 처리
-    private void toggleIngredient(Button button, String ingredient) {
-        if (selectedIngredients.contains(ingredient)) {
-            selectedIngredients.remove(ingredient);
+            buttonContainer.addView(ingredientButton);
         }
     }
 
-
-    //뒤로가기
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        // 뒤로 가기 버튼을 눌렀을 때의 동작 처리
-        if (item.getItemId() == android.R.id.home) {
-            finish(); // 액티비티 종료
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+    private void goToResultActivity() {
+        Intent intent = new Intent(DetailActivity.this, resultActivity.class);
+        intent.putExtra("selectedIngredients", (Serializable) selectedIngredients);
+        intent.putExtra("selectedItem", searchQuery);
+        startActivity(intent);
     }
-
 }
